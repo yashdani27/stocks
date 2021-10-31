@@ -1,0 +1,35 @@
+algorithm_trend_yf.py
+    def print_dataframe(p_dataframe)
+    int = smooth_out(location, v_list, number)
+    list_trend_response = prepare_trend(p_df, p_avg_factor)
+    df = get_trend(p_ticker, p_exchange, p_interval, p_date, p_month, p_year)
+
+data_from_screener_bs4.py
+    string = prepare_url(p_ticker)
+    string = get_html_from_screener(p_url)
+    dictionary = parse_data_from_screener(p_response)
+    dictionary = get_data_from_screener_using_bs4(p_ticker)
+
+data_from_screener_selenium.py
+    dictionary = get_data_from_screener_using_selenium(p_ticker)
+
+data_from_ticker_bs4.py
+    string = prepare_url(p_ticker)
+    string = get_html_from_ticker(p_url)
+    dictionary = parse_html_from_ticker(p_response)
+    dictionary = get_data_from_ticker_using_bs4(p_ticker)
+
+historical_data_from_yf.py
+    date(in seconds) = get_date(number_of_days)
+    date(in seconds) = get_start_date(p_date, p_month, p_year)
+    string = prepare_url(p_ticker, period1, period2, p_interval)
+    string = get_data_from_yahoo_finance(p_url)
+    df = prepare_dataframe(p_response)
+    string = prepare_ticker(p_ticker, p_exchange)
+    df = add_net_change_column_to_df(df)
+    df = add_percent_change_column_to_df(df)
+    df = get_data_from_start_date(p_ticker, p_exchange, p_interval, p_date, p_month, p_year, p_net_change, p_percent_change)
+    df = get_data_for_trailing_days(p_ticker, p_exchange, p_interval, p_interval_days, p_net_change, p_percent_change)
+    df = get_monthly_gains(p_dataframe)
+    df = get_yearly_gains(p_dataframe)
+    print_dataframe(p_dataframe)

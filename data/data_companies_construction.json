@@ -1,0 +1,46 @@
+{
+  "companies": [
+    {
+      "symbol": "ASHOKA",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "PNCINFRA",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "POWERMECH",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "DBL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "KOLTEPATIL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "GRINFRA",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    }
+  ]
+}

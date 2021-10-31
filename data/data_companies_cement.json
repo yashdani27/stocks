@@ -1,0 +1,67 @@
+{
+  "companies": [
+    {
+      "symbol": "ACC",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "AMBUJACEM",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "DECCANCE",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "HEIDELBERG",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "JKCEMENT",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "JKLAKSHMI",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "MANGLMCEM",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "ORIENTCEM",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "SHREECEM",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    }
+  ]
+}

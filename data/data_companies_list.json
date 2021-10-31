@@ -1,0 +1,14 @@
+{
+    "bundles": [
+      "../data/data_companies_auto.json",
+      "../data/data_companies_cement.json",
+      "../data/data_companies_construction.json",
+      "../data/data_companies_fmcg.json",
+      "../data/data_companies_it.json",
+      "../data/data_companies_pharma.json",
+      "../data/data_companies_portfolio.json",
+      "../data/data_companies_steel.json",
+      "../data/data_companies_sensex.json",
+      "../data/data_companies_nifty.json"
+    ]
+}

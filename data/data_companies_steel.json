@@ -1,0 +1,67 @@
+{
+  "companies": [
+    {
+      "symbol": "TATASTEEL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-12"
+      ]
+    },
+    {
+      "symbol": "TATASTLLP",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-07-15"
+      ]
+    },
+    {
+      "symbol": "TATASTLBSL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "GPIL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-07-27"
+      ]
+    },
+    {
+      "symbol": "SARDAEN",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-07-30"
+      ]
+    },
+    {
+      "symbol": "JSWSTEEL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-21"
+      ]
+    },
+    {
+      "symbol": "JINDALSTEL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-10"
+      ]
+    },
+    {
+      "symbol": "JSLHISAR",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-07-29"
+      ]
+    },
+    {
+      "symbol": "KIRLFER",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-22"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "companies": [
+    {
+      "symbol": "NESTLEIND",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "PGHH",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-25"
+      ]
+    },
+    {
+      "symbol": "DMART",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-14"
+      ]
+    },
+    {
+      "symbol": "BRITANNIA",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-07-30"
+      ]
+    },
+    {
+      "symbol": "HINDUNILVR",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-19"
+      ]
+    },
+    {
+      "symbol": "GODREJCP",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-04"
+      ]
+    },
+    {
+      "symbol": "VBL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-02"
+      ]
+    },
+    {
+      "symbol": "TATACONSUM",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-22"
+      ]
+    },
+    {
+      "symbol": "DABUR",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-03"
+      ]
+    },
+    {
+      "symbol": "BAJAJCON",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-05"
+      ]
+    }
+  ]
+}

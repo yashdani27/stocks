@@ -1,0 +1,272 @@
+.container {
+    font-family: 'Andale Mono';
+}
+
+.heading-center {
+    font-family: 'Andale Mono';
+    color: #006699;
+    /*Apple Chancery*/
+    /*Copperplate
+    Andale Mono
+    Helvetica
+    */
+}
+
+hr {
+    margin: 8px 0;
+}
+
+.weekly-scroll {
+    min-width: 540px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.scroll {
+    min-width: 1200px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.border-heading {
+    border: 1px solid white;
+}
+
+.border-yf {
+    border: 1px solid black;
+}
+
+.border-left {
+    border-left: 2px dotted #006699;
+}
+
+.border-right {
+    border-right: 2px dotted #006699;
+}
+
+.hr-color {
+    background-color: #f00;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-black {
+    color: #000;
+}
+
+.text-white {
+    color: #fff;
+}
+
+.text-green {
+    color: #52B788;
+}
+
+.text-red {
+    color: #f00;
+}
+
+.bg-color {
+    color: #fff;
+    background-color: #006699;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.underline {
+    width: 100%;
+    border: 0px solid #006699;
+}
+
+.style-button {
+    background-color: #fff;
+    color: #006699;
+    border: 1px dotted #006699;
+    border-radius: 10px;
+}
+
+.style-button-fill {
+    background-color: #006699;
+    color: #fff;
+    border: 1px solid #006699;
+    border-radius: 10px;
+}
+
+.style-card {
+    margin: 10px;
+}
+
+.style-card-body {
+    padding: 0px;
+}
+
+.style-card-title {
+    color: #fff;
+    background-color: #006699;
+    padding: 10px;
+}
+
+.style-card-title-a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.text-underline{
+    text-decoration: underline;
+}
+
+.margin-0 {
+    margin: 0px;
+}
+
+.margin-5 {
+    margin: 5px;
+}
+
+.margin-10 {
+    margin: 10px;
+}
+
+.margin-15 {
+    margin: 15px;
+}
+
+.margin-20 {
+    margin: 20px;
+}
+
+.margin-top-0 {
+    margin-top: 0px;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.padding-0 {
+    padding: 0px;
+}
+
+.padding-5 {
+    padding: 5px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.padding-15 {
+    padding: 15px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-top-5 {
+    padding-top: 5px;
+}
+
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+.padding-top-15 {
+    padding-top: 55px;
+}
+
+.padding-top-20 {
+    padding-top: 20px;
+}
+
+.padding-top-25 {
+    padding-top: 25px;
+}
+
+.padding-top-30 {
+    padding-top: 30px;
+}
+
+.padding-left-0 {
+    padding-left: 0px;
+}
+
+.padding-left-5 {
+    padding-left: 5px;
+}
+
+.padding-left-10 {
+    padding-left: 10px;
+}
+
+.padding-left-15 {
+    padding-left: 55px;
+}
+
+.padding-left-20 {
+    padding-left: 20px;
+}
+
+.padding-right-0 {
+    padding-right: 0px;
+}
+
+.padding-right-5 {
+    padding-right: 5px;
+}
+
+.padding-right-10 {
+    padding-right: 10px;
+}
+
+.padding-right-15 {
+    padding-right: 55px;
+}
+
+.padding-right-20 {
+    padding-right: 20px;
+}
+
+.padding-bottom-0 {
+    padding-bottom: 0px;
+}
+
+.padding-bottom-5 {
+    padding-bottom: 5px;
+}
+
+.padding-bottom-10 {
+    padding-bottom: 10px;
+}
+
+.padding-bottom-15 {
+    padding-bottom: 55px;
+}
+
+.padding-bottom-20 {
+    padding-bottom: 20px;
+}
+
+.chart-style {
+    width: 75%;
+}

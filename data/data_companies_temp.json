@@ -1,0 +1,25 @@
+{
+  "companies": [
+    {
+      "symbol": "BEPL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-12"
+      ]
+    },
+    {
+      "symbol": "CAMS",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-10"
+      ]
+    },
+    {
+      "symbol": "DECCANCE",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-13"
+      ]
+    }
+  ]
+}

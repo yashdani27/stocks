@@ -1,0 +1,74 @@
+{
+  "companies": [
+    {
+      "symbol": "ABBOTINDIA",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-06"
+      ]
+    },
+    {
+      "symbol": "DIVISLAB",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-06"
+      ]
+    },
+    {
+      "symbol": "DRREDDY",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-07-27"
+      ]
+    },
+    {
+      "symbol": "GLAND",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-22"
+      ]
+    },
+    {
+      "symbol": "IPCALAB",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-05"
+      ]
+    },
+    {
+      "symbol": "CIPLA",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-26"
+      ]
+    },
+    {
+      "symbol": "CAPLIPOINT",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-05"
+      ]
+    },
+    {
+      "symbol": "IOLCP",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-13"
+      ]
+    },
+    {
+      "symbol": "LINCOLN",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-10"
+      ]
+    },
+    {
+      "symbol": "FDC",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-08-12"
+      ]
+    }
+  ]
+}

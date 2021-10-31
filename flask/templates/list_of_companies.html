@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block loc %}
+    {% if error %}
+        {{ error }}
+    {% endif %}
+    <div class="list-wrapper">
+        {% for company in data_companies['companies'] %}
+            {% set outer_loop = loop %}
+            <div class="card margin-10">
+                <div class="card-body padding-0">
+                    <div class="card-title bg-color padding-10"><a href="/{{company['symbol']}}" class="text-decoration-none text-white">{{ company['symbol'] }}</a></div>
+                    <div class="card-text">
+                        <div class="row margin-5">
+                            {% for datapoint in list_dict_data_points[loop.index - 1]['meta_data_points'] %}
+                                <div class="col-2 col-sm-2 col-md-1 padding-0">
+                                    <div class="text-center border-heading"><h6>{{ datapoint }} Week{{ 's' if datapoint > 1 else '' }}</h6></div>
+                                    <div class="text-center"><h6>{{ list_dict_data_points[outer_loop.index - 1]['open_data_points'][loop.index - 1] }}</h6></div>
+                                    <div class="text-center {{ 'text-green' if list_dict_data_points[outer_loop.index - 1]['val_data_points'][loop.index - 1] > '0' else 'text-red' }}"><h6><strong>{{ list_dict_data_points[outer_loop.index - 1]['val_data_points'][loop.index - 1] }}</strong>%</h6></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock loc %}

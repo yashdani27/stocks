@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+{% block buy_op %}
+    {% for dict_company in dict_companies %}
+        <div class="card style-card">
+            <div class="card-body style-card-body padding-0">
+                <div class="card-title style-card-title">
+                    <a href="/{{dict_company['company']['symbol']}}" class="style-card-title-a">{{ dict_company['company']['symbol'] }}</a>
+                </div>
+                <div class="card-text">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 padding-20">
+                            <div class="row">
+                                <div class="col-6 col-sm-6 col-md-6 text-center"><h5>Sales <i class="fas fa-long-arrow-alt-up"></i> {{ dict_company['qr_sales'] }}%</h5></div>
+                                <div class="col-6 col-sm-6 col-md-6 text-center"><h5>Profit <i class="fas fa-long-arrow-alt-up"></i> {{ dict_company['qr_profit'] }}%</h5></div>
+                            </div>
+                            <h6 class="text-center">Trading at {{ dict_company['price_below_result'] }}% below result day price</h6>
+                            <h6 class="text-center">(Last Results: {{ dict_company['last_result_date'] }})</h6>
+                            <h6 class="text-center">({{ dict_company['days_since_result'] }} days / {{ dict_company['sessions_since_result'] }} sessions)</h6>
+                            <hr>
+                            <h6 class="text-center">Fundamentals from Ticker</h6>
+                            <div class="row">
+                                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <h6 class="text-center text-underline">Mcap</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Market Capitalization'] }}</h6>
+                                    <h6 class="text-center text-underline">ROE</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Return on Equity'] }}</h6>
+                                    <h6 class="text-center text-underline">D/E</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['D/E'] }}</h6>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <h6 class="text-center text-underline">EV</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Enterprise Value'] }}</h6>
+                                    <h6 class="text-center text-underline">ROCE</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Return on Capital Employed'] }}</h6>
+                                    <h6 class="text-center text-underline">P/CF</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Price to Cash Flow'] }}</h6>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <h6 class="text-center text-underline">P/E</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Price / Equity'] }}</h6>
+                                    <h6 class="text-center text-underline">Profit</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Profit Growth'] }}</h6>
+                                    <h6 class="text-center text-underline">ICR</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Interest Coverage Ratio'] }}</h6>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <h6 class="text-center text-underline">P/B</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Price / Book Value'] }}</h6>
+                                    <h6 class="text-center text-underline">Sales</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['Sales Growth / CAR'] }}</h6>
+                                    <h6 class="text-center text-underline">CFO/PAT</h6>
+                                    <h6 class="text-center">{{ dict_company['ticker_data']['CFO / PAT'] }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                            <canvas id="myChart{{loop.index - 1}}"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <script>
+        var val_companies = [{% for dict_company in dict_companies %} '{{ dict_company['company']['symbol'] }}', {% endfor %}]
+        console.log(val_companies);
+        var closing_prices = [{% for dict_company in dict_companies %} {{ dict_company['close'] }}, {% endfor %}]
+        console.log(closing_prices);
+
+        let arr_arr_dates = [];
+        let arr_dates = [];
+        {% for dict_company in dict_companies %}
+            arr_dates = [];
+            {% for val_date in dict_company['date'] %}
+                arr_dates.push('{{val_date}}');
+            {% endfor %}
+            arr_arr_dates.push(arr_dates);
+        {% endfor %}
+
+        console.log(arr_arr_dates);
+
+        console.log({{count}});
+        for(var i = 0; i < {{count}}; i++) {
+            const data = {
+                labels: arr_arr_dates[i],
+                datasets: [
+                    {
+                        label: 'Data',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: closing_prices[i],
+                        lineTension: 0.3
+                    }
+                ]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart' + i),
+                config
+            );
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,291 @@
+Structure
+    'data' directory to store json data about sensex, nifty components etc.
+    'test' directory to store testing code
+    'get' directory to fetch data from sources using requests
+    'algorithms' directory for interpretation of data fetched by 'get' directory
+    'news' directory for company's media and press releases
+
+Interfaces
+
+Yahoo Finance Trend
+
+
+Goals for 29th August, 2021
+1. Get distance from 52 week high and 52 week low for a stock - from screener
+2. Trend info - yahoo finance
+3. Monthly / Yearly gains ---------------------------------------------------------------------------------DONE
+4. Scrape media releases for Tata companies and any other companies that have scrape-friendly interfaces -
+5. Multiple options to view financial statements data - Trend - from screener
+
+
+TRY TO CODE AND FIND A POINT OF BUYING TO MAXIMISE RETURNS
+
+
+Portfolio Analysis - Parameters to collect
+1. Buy Price
+2. Buy Date
+3. Qty
+4. Average Price (derived)
+5. Reason
+
+addStock
+    if already exists: please update
+    else:
+        get the following:
+            1. Name, Sector
+            2. Buy Price
+            3. Buy Date
+            4. Qty
+            5. Reason (optional)
+            6. Average Price (same as buy price for new entries)
+
+updateStock
+    get the following:
+            1. Buy Price
+            2. Buy Date
+            3. Qty
+            4. Reason (optional)
+            5. Average Price (derived using old and new price)
+
+
+mongodb object
+{
+    "companies": [
+        {
+            "ticker": "GPIL",
+            "sector": "Steel and Iron",
+            "activity": [
+                {
+                    "type": "buy"
+                    "price": 100,
+                    "date": "10,10,2020",
+                    "qty": 50,
+                    "reason": "Low Valuation"
+                },
+                {
+                    "type": "buy"
+                    "price": 120,
+                    "date": "10,12,2020",
+                    "qty": 50,
+                    "reason": "Average"
+                }
+            ]
+        }
+    ]
+}
+
+Two options:
+1. Send entire DTO only to UI
+2. Send only average price and total qty
+
+Things to display on UI
+    Average Price
+    Total Qty
+    Total Price
+    Gain - Absolute and Percent
+    Distance from 52week high and low
+    Desired Qty to buy              Eventual Avg Price
+    Eventual Avg Price = (CurrentPrice * Desired Qty to buy + Avg Price * Total Qty) / (Total Qty + Desired Qty to buy)
+    Data for last 1 session, 5 sessions, 15 sessions, 30 sessions, 60 sessions, 90 sessions
+    Data for last 1 session, 5 sessions, 15 days, 30 days, 60 days, 90 days, 120 days, 180 days, 240 days, 300 days, 360 days, Max
+    (Compute how to get 90 rows from yahoo finance) buffer to be kept for holidays - get roughly 100 rows
+
+    set date column of DF as index and use that to get data for given dates in DF
+    -5 sessions
+    -14
+
+    prepare backend for portfolio part
+    prepare day-wise gain/loss
+
+
+data from ticker = Debt to Equity, CFO/PAT, Shareholding and pledge, Current Assets and Current Liabilities, finstar
+data from screener = MCAP, Price, High/Low, PE, PB, ROE, ROCE
+                        Quarters and P&L - Sales, Expenses, OPM, PBT, PAT
+                        Cash Flow - all rows
+                        Shareholding pattern
+7D      14D     30D     60D     180D    360D
+1W      2W      4W      8W      26W     52W
+
+
+What are the things that can be done using YF data?
+1. Trend Analysis
+2. Find 52WH and 52L and determine price distance from those 2 points.
+3. Determine candlestick patterns.
+
+
+Plan for flask website
+1. include trend dataframe on the page.
+2. Show a plot of the price chart.
+3. include a text field at the top to search for a company.
+4. show list of sensex and nifty stocks that have made the most movement in near past.
+5. prepare list of stocks that can be sector-based, portfolio-based, watchlist-based, etc.
+6. design the collapsable card that will be shown for every item in the list.
+7. compute alpha and beta of a stock wrt nifty index
+8.
+
+
+App Flow
+1. Login page (develop later; show just a button; on press proceed to next screen)                  done
+2. Landing page - show bundle of stocks - sensex, nifty, portfolio, watchlist, sector-wise list     done
+3. Bundle page - For each stock in the bundle:
+                    Fetch data for last 1 year and show month-wise % rows
+                    Compute High and Low and distance(current_price, high, low)
+4. Company page - Show data from ticker, screener, company cagr vs index cagr                       done
+
+Data Structure
+1. Bundles - sensex, nifty, portfolio, watchlist, sector-wise list
+    (
+        How to obtain sector for each ticker?
+        get sector for all stocks listed on NSE via ticker
+        what about BSE? -
+    )
+
+volume traded
+
+5/10/2021
+scrape media and press releases for tata companies
+show last 3 month price graph for same sector companies (done) / try individual graphs and different lines on same graphs
+
+
+        for(let i = 0; i < {{count}}; i++) {
+            const data = {
+                labels: {{ list_dict_data_points[0]['Date'] | safe }},
+                datasets: [
+                    {
+                        label: {{ list_dict_data_points[0]['Company'] | safe }},
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: {{ list_dict_data_points[0]['Close'] | safe }},
+                        lineTension: 0.3
+                    }
+                ]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart' + i),
+                config
+            );
+        }
+
+
+GPPL - 2500 - 137.70
+CASTROLIND - 1000 - 187.68
+IDFCFIRSTB - 15000 - 47.40
+PETRONET LNG - 1000 - 249.90
+
+00669195483
+669195483
+Booking reference:GLHN6S
+
+
+
+HIGH    LOW
+%BH     %AL
+
+MCAP    EV
+PE      PB
+ROE     ROCE
+PG      SG
+D/E     CFO/PAT
+PCF     ICR
+
+12/10/2021
+Store data from:
+    3 month weekly data from YF
+    1 year weekly data from YF
+    ticker key-value attributes     done -- completed on 26th October
+        13/10/2021
+        one table - ticker_data - using SQL-Alchemy -- (used mongodb instead)
+        (watch sql alchemy video by corey schafer)
+
+13/10/2021
+For a given stock:
+    1. fetch on what date the last quarterly results were declared
+    2. fetch the percent increase/decrease between subsequent (last 2) quarters for (sales, expenses, profit)
+    3. for a given preset condition, if criteria met, include the ticker symbol under 'buying opportunities'
+    For e.g:
+        last_q_result_date = 2021-10-13, LTP on that date = 200
+        present_date = 2021-11-15, LTP on that date = 188
+        (Condition between old and new price --> new_price < 1.05*old_price)
+        sales and profit increase by 10%,
+        include stock symbol under potential buy opportunity
+
+
+{
+    "symbol": "TATAMOTORS",
+    "exchange": "NSE",
+    "last_q_result_date": "2021-10-13"
+}
+
+{
+    "symbol": "SAHYADRI",
+    "exchange": "BSE",
+    "last_q_result_date": "2021-11-02"
+    "ticker_symbol": "SCRIP-132841"
+}
+
+14/10/2021
+Implemented prototype for above idea
+
+15/10/2021
+
+//
+
+show company card       -- done on 27th October
+--------------------------------|----------------
+company info--------------------|chart-----------
+"potential buy opportunity"
+"xx.xx% below result date price"
+fetch ticker data from db
+
+//
+
+Complete news scraping of tata companies
+
+
+17/10/2021
+create one file which will check if the result date falls on a
+    1. saturday
+    2. sunday
+    3. if data for that date does not exist on YF
+
+console.log({{count}});
+        for(var i = 0; i < {{count}}; i++) {
+            console.log({{dict_companies[0]['date'] | safe}});
+            const data = {
+                labels: {{ dict_companies[0]['date'] | safe }},
+                datasets: [
+                    {
+                        label: 'Data',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: closing_prices[i],
+                        lineTension: 0.3
+                    }
+                ]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart' + i),
+                config
+            );
+        }
+
+
+        --- 0.016316890716552734 seconds ---DB
+        --- 1.2087068557739258 seconds ---TICKER
+        --- 1.4318699836730957 seconds ---TICKER
+
+        --- 2.776134967803955 total seconds ---
+        --- 3.4559848308563232 total seconds ---
+
+
+git clone https://yashdani90@bitbucket.org/yashdani90/stocks.git

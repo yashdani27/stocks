@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block login %}
+    <div class="login-section">
+        <form method="POST" action="/home">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.company.label(class="form-control-label") }}
+                {{ form.company(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.search(class="btn btn-outline-info") }}
+            </div>
+        </form>
+
+        <div class="row">
+            {% for option in options %}
+                <div class="col-12 col-sm-12 col-md-6 padding-10">
+                    <div class="card">
+                        <div class="card-body padding-0">
+                            <div class="card-title bg-color padding-10">
+                                <h5 class="margin-0">
+                                    <a class="text-decoration-none text-white" href="/{{option['endpoint']}}">{{ option['option'] }}</a>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <h6>{{ option['desc'] }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock login %}

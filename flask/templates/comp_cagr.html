@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block comp_cagr %}
+    <form id="form-bundle" action="" method="post" class="margin-top-20">
+        {% for bundle in list_bundles %}
+            <input class="style-button padding-10 {{ 'style-button-fill' if selected_index == loop.index }}" type="submit" name="action" value="{{bundle}}">
+        {% endfor %}
+    </form>
+    <div class="margin-top-20">
+        <div class="row scroll">
+            <div class="col-1 col-sm-1 col-md-1 col-lg-1 border-yf text-center padding-0">Year</div>
+            <div class="col-1 col-sm-1 col-md-1 col-lg-1 border-yf text-center padding-0">Index</div>
+            {% for company in companies %}
+                {% if loop.index < 11 %}
+                <div class="col-1 col-sm-1 col-md-1 col-lg-1 border-yf text-center padding-0"><a href="/{{ company['symbol'] }}" class="text-decoration-none text-black">{{ company['symbol'] }}</a></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% for key, value in df_cagr.iterrows() %}
+            <div class="row scroll">
+                <div class="col-1 col-sm-1 col-md-1 col-lg-1 border-yf text-center padding-0">{{value['Year']}}</div>
+                <div class="col-1 col-sm-1 col-md-1 col-lg-1 border-yf text-center padding-0 {{ 'text-green' if value['Index'] > 15 else 'text-red' }}">{{value['Index']}}</div>
+                {% for company in companies %}
+                    {% if loop.index < 11 %}
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1 border-yf text-center padding-0">
+                            <span class="{{ 'text-green' if value[company['symbol']] > 15 else 'text-red' }}">{{value[company['symbol']]}}</span> | <span class="{{ 'text-green' if value[company['symbol'] + 'b'] > 15 else 'text-red' }}">{{value[company['symbol'] + 'b']}}</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock comp_cagr %}

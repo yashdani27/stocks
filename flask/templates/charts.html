@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block chart %}
+    <h5 class="text-center bg-color padding-10">Companies in {{ bundle_name | upper }} bundle</h5>
+    <div class="row">
+    {% for dict_data_points in list_dict_data_points %}
+        <div class="col-12 col-sm-12 col-md-6 {{ 'border-right' if loop.index % 2 == 1 else 'border-left' }}">
+            <h5 class="text-center margin-0"><a href="/{{dict_data_points['Company']}}" class="text-decoration-none">{{ dict_data_points['Company'] }}</a></h5>
+            <canvas id="myChart{{loop.index - 1}}"></canvas>
+            <div class="row padding-top-10">
+                {% for datapoint in dict_data_points['meta_data_points'] %}
+                    <div class="col-2 col-sm-2 col-md-2">
+                        <div class="text-center border-heading"><strong>{{ datapoint }} Week{{ 's' if datapoint > 1 else '' }}</strong></div>
+                        <div class="text-center">{{ dict_data_points['open_data_points'][loop.index - 1] }}</div>
+                        <div class="text-center {{ 'text-green' if dict_data_points['val_data_points'][loop.index - 1] > '0' else 'text-red' }}"><strong>{{ dict_data_points['val_data_points'][loop.index - 1] }}</strong>%</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if loop.index % 2 == 0 %}
+            <hr class="margin-10 padding-5 bg-color">
+        {% endif %}
+    {% endfor %}
+    </div>
+    <script>
+        var company_names = [{% for label in list_dict_data_points %} '{{ label['Company'] }}', {% endfor %}]
+        console.log(company_names);
+        var closing_prices = [{% for label in list_dict_data_points %} {{ label['Close'] }}, {% endfor %}]
+        console.log(closing_prices);
+
+        console.log({{count}});
+        for(var i = 0; i < {{count}}; i++) {
+            console.log({{list_dict_data_points[i] | safe}});
+            const data = {
+                labels: {{ list_dict_data_points[0]['Date'] | safe }},
+                datasets: [
+                    {
+                        label: 'Data',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: closing_prices[i],
+                        lineTension: 0.3
+                    }
+                ]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart' + i),
+                config
+            );
+        }
+    </script>
+{% endblock chart %}

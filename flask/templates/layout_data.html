@@ -1,0 +1,303 @@
+{% extends "layout.html" %}
+{% block ticker %}
+    {% if dictionary_ticker %}
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-7">
+                <h1>{{ dictionary_ticker['Name'] }}</h1>
+                <h5>Sector: {{ dictionary_ticker['Sector'] }}</h5>
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 text-center padding-20">
+                <h3>{{ dictionary_ticker['Price'] }}</h3>
+                <div class="row">
+                    <div class="col-6 col-sm-6 col-md-6 text-center"><h5 class="margin-0"><strong>{{ dictionary_ticker['PERCENT_FROM_52_HIGH'] }}</strong>% below High</h5></div>
+                    <div class="col-6 col-sm-6 col-md-6 text-center"><h5 class="margin-0"><strong>{{ dictionary_ticker['PERCENT_FROM_52_LOW'] }}</strong>% above Low</h5></div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-8">
+              <canvas id="myChart"></canvas>
+            </div>
+            <div class="row col-12 col-sm-12 col-md-4 padding-0">
+                {% for key_ratio in key_ratios %}
+                    <div class="col-2 col-sm-2 col-md-6 padding-0 border-yf">
+                        <div class="text-center"><strong>{{ key_ratio['key'] }}</strong></div>
+                        <div class="text-center {{ key_ratio['class'] }}">{{ key_ratio['value'] }}</div>
+                    </div>
+                {% endfor %}
+                <hr>
+                {% for key in quarterly_data['keys'] %}
+                    {% for val in quarterly_data[key] %}
+                        <div class="col-4 col-sm-4 col-md-4 text-center padding-0">{{ val }}</div>
+                    {% endfor %}
+                    {% for val in quarterly_data['rel_' + key] %}
+                        <div class="col-6 col-sm-6 col-md-6 text-center padding-0 {{ 'text-green' if val  > '1' else 'text-red' }}">{{ val }}</div>
+                    {% endfor %}
+
+                {% endfor %}
+<!--                <h4 class="text-center heading-center">Year at a glance</h4>-->
+<!--                {% for datapoint in dict_data_points['meta_data_points'] %}-->
+<!--                    <div class="col-2 col-sm-2 col-md-6">-->
+<!--                        <div class="text-center border-heading"><strong>{{ datapoint }} Week{{ 's' if datapoint > 1 else '' }}</strong></div>-->
+<!--                        <div class="text-center">{{ dict_data_points['open_data_points'][loop.index - 1] }}</div>-->
+<!--                        <div class="text-center {{ 'text-green' if dict_data_points['val_data_points'][loop.index - 1] > '0' else 'text-red' }}"><strong>{{ dict_data_points['val_data_points'][loop.index - 1] }}</strong>%</div>-->
+<!--                    </div>-->
+<!--                {% endfor %}-->
+            </div>
+        </div>
+
+        <script>
+            const data = {
+              labels: {{ graph_x | safe }},
+              datasets: [
+                  {
+                    label: '1 Year Weekly Data',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: {{ graph_y | safe }},
+                    lineTension: 0.3
+                  }/*,
+                  {
+                    label: '1 Year Linear Data',
+                    backgroundColor: 'rgb(0, 66, 99)',
+                    borderColor: 'rgb(00, 66, 99)',
+                    data: {{ graph_y_sorted | safe }},
+                    lineTension: 0.1
+                  }*/
+              ]
+            };
+            const config = {
+              type: 'line',
+              data: data,
+              options: {}
+            };
+            var myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        </script>
+        <hr>
+        <h4 class="text-center heading-center">Year at a glance</h4>
+        <div class="row">
+            {% for datapoint in dict_data_points['meta_data_points'] %}
+            <div class="col-2 col-sm-2 col-md-1">
+                <div class="text-center border-heading">{{ datapoint }} Week{{ 's' if datapoint > 1 else '' }}</div>
+                <div class="text-center"><h6>{{ dict_data_points['open_data_points'][loop.index - 1] }}</h6></div>
+                <div class="text-center {{ 'text-green' if dict_data_points['val_data_points'][loop.index - 1] > '0' else 'text-red' }}"><h5><strong>{{ dict_data_points['val_data_points'][loop.index - 1] }}</strong>%</h5></div>
+            </div>
+            {% endfor %}
+        </div>
+        <hr>
+<!--        <div class="row">-->
+<!--            <div class="col-4 col-sm-4 col-md-4"></div>-->
+<!--            <div class="col-4 col-sm-4 col-md-4">-->
+<!--                <h4 class="text-center heading-center">Fundamental Ratios</h4>-->
+<!--                <h4 class="text-center underline"></h4>-->
+<!--            </div>-->
+<!--            <div class="col-4 col-sm-4 col-md-4"></div>-->
+<!--        </div>-->
+<!--        <div class="price-year-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Price</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>52 Week High</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>52 Week Low</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['Price'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['52 Week High'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['52 Week Low'] }}</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="mcap-ro-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0"></h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0"><strong>{{ dictionary_ticker['PERCENT_FROM_52_HIGH'] }}</strong>% below High</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0"><strong>{{ dictionary_ticker['PERCENT_FROM_52_LOW'] }}</strong>% above Low</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="mcap-ro-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Market Cap</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>ROE</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>ROCE</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Market Capitalization'] > dictionary_ticker['Enterprise Value'] else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Market Capitalization'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Return on Equity'] > 20 else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Return on Equity'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Return on Capital Employed'] > 20 else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Return on Capital Employed'] }}</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="ev-growth-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Enterprise Value</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Sales Growth</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Profit Growth</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Market Capitalization'] > dictionary_ticker['Enterprise Value'] else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Enterprise Value'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Sales Growth / CAR'] > 10 else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Sales Growth / CAR'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Profit Growth'] > 10 else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Profit Growth'] }}</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="price-earning-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Price</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>EPS (TTM)</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>P / E</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['Price'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['Earnings per share'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Price / Equity'] < 15 else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Price / Equity'] }}</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="price-bookvalue-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Price</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Book Value</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>P / B</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['Price'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['Book Value'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Price / Book Value'] < 2 else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Price / Book Value'] }}</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="cash-debt-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Cash</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Debt</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Debt / Equity</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Cash / Net Interest Income'] > dictionary_ticker['Debt / Cost to Income'] else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Cash / Net Interest Income'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Cash / Net Interest Income'] > dictionary_ticker['Debt / Cost to Income'] else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Debt / Cost to Income'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['D/E'] < '1' else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['D/E'] }}</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <div class="cards-patch">-->
+<!--            <div class="row">-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Price to Cash Flow</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>Interest Coverage Ratio</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5>CFO / PAT</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center"><h5 class="margin-0">{{ dictionary_ticker['Price to Cash Flow'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['Interest Coverage Ratio'] > '2' else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['Interest Coverage Ratio'] }}</h5></div>-->
+<!--                <div class="col-4 col-sm-4 col-md-4 text-center {{ 'text-green' if dictionary_ticker['CFO / PAT'] > '1' else 'text-red' }}"><h5 class="margin-0">{{ dictionary_ticker['CFO / PAT'] }}</h5></div>-->
+<!--            </div>-->
+<!--        </div>-->
+    {% else %}
+        <h1>Unable to fetch data from Ticker</h1>
+    {% endif %}
+{% endblock ticker %}
+
+{% block screener %}
+    {% if dictionary_screener %}
+        {% for table in dictionary_tables %}
+            <div class="row margin-top-20">
+                <div class="col-4 col-sm-4 col-md-4"></div>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <h4 class="text-center heading-center">{{ table['Heading Center'] }}</h4>
+                    <h4 class="text-center underline"></h4>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4"></div>
+            </div>
+            <div class="row scroll">
+                <div class="col-1 col-sm-1 col-md-1 border-heading bg-color">{{ table['Heading Left'] }}</div>
+                <div class="col-11 col-sm-11 col-md-11 bg-color">
+                    <div class="row">
+                    {% for val in table['Heading'] %}
+                        <div class="col-1 col-sm-1 col-md-1 border-heading">{{ val }}</div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row scroll">
+                {% for key in table['keys'] %}
+                    <div class="col-1 col-sm-1 col-md-1">{{ key }}</div>
+                    <div class="col-11 col-sm-11 col-md-11">
+                        <div class="row">
+                        {% for val in dictionary_screener[key] %}
+                            <div class="col-1 col-sm-1 col-md-1 text-center">{{ val }}</div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-1 col-sm-1 col-md-1"></div>
+                    <div class="col-11 col-sm-11 col-md-11">
+                        <div class="row">
+                        {% for val in dictionary_screener[table['prefix'] + key] %}
+                            {% if table['prefix'] == 'Rel ' %}
+                                <div class="col-1 col-sm-1 col-md-1 text-right padding-0 {{ 'text-green' if val > table['comp_value'] else 'text-red' }}"><h6>{{ (((val | float) - 1) * 100) | int }}%</h6></div>
+                            {% elif table['prefix'] == 'Diff '  %}
+                                <div class="col-1 col-sm-1 col-md-1 text-right padding-0 {{ 'text-green' if val > table['comp_value'] else 'text-red' }}"><h6>{{ val }}</h6></div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1>Unable to fetch data from Screener</h1>
+    {% endif %}
+{% endblock screener %}
+
+{% block yahoo_finance %}
+    <div class="scroll">
+        <div class="row margin-top-20">
+            <div class="col-4 col-sm-4 col-md-4"></div>
+            <div class="col-4 col-sm-4 col-md-4">
+                <h4 class="text-center heading-center">Stock v/s Index</h4>
+                <h4 class="text-center underline"></h4>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 text-center border-yf bg-color">
+                {{ dictionary_ticker['Ticker'] }}
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 text-center border-yf bg-color">
+                Index
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+                <div class="row">
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">Date</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">% Change</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">Open</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">Close</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">CAGR (after COVID)</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">CAGR (before COVID)</div>
+                </div>
+                {% for key, value in df_cagr_company.iterrows() %}
+                    <div class="row">
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['Date'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['PercentChange'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['Open'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['Close'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf {{ 'text-green' if value['CAGR (after COVID)'] > 15 else 'text-red' }}">{{ value['CAGR (after COVID)'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf {{ 'text-green' if value['CAGR (before COVID)'] > 15 else 'text-red' }}">{{ value['CAGR (before COVID)'] }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div class="row">
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">Date</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">% Change</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">Open</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">Close</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">CAGR (after COVID)</div>
+                    <div class="col-2 col-sm-2 col-md-2 text-center border-yf">CAGR (before COVID)</div>
+                </div>
+                {% for key, value in df_cagr_index.iterrows() %}
+                    <div class="row">
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['Date'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['PercentChange'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['Open'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf">{{ value['Close'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf {{ 'text-green' if value['CAGR (after COVID)'] > 15 else 'text-red' }}">{{ value['CAGR (after COVID)'] }}</div>
+                        <div class="col-2 col-sm-2 col-md-2 text-center border-yf {{ 'text-green' if value['CAGR (before COVID)'] > 15 else 'text-red' }}">{{ value['CAGR (before COVID)'] }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock yahoo_finance %}

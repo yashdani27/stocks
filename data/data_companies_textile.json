@@ -1,0 +1,61 @@
+{
+  "companies": [
+    {
+      "symbol": "VTL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-27"
+      ]
+    },
+    {
+      "symbol": "GLOSTERLTD",
+      "exchange": "BSE",
+      "q_result_date": [
+        "2021-10-27"
+      ],
+      "ticker_symbol": "SCRIP-244215"
+    },
+    {
+      "symbol": "VTL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-27"
+      ]
+    },
+    {
+      "symbol": "VTL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-27"
+      ]
+    },
+    {
+      "symbol": "VTL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-27"
+      ]
+    },
+    {
+      "symbol": "VTL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-27"
+      ]
+    },
+    {
+      "symbol": "VTL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-27"
+      ]
+    },
+    {
+      "symbol": "VTL",
+      "exchange": "NSE",
+      "q_result_date": [
+        "2021-10-27"
+      ]
+    }
+  ]
+}
