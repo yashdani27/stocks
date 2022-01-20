@@ -5,7 +5,7 @@ from constants import TICKER_KEYS
 
 
 def prepare_url(p_ticker):
-    return 'https://ticker.finology.in/company/' + p_ticker + '?mode=C'
+    return 'https://ticker.finology.in/company/' + p_ticker
 
 
 def get_html_from_ticker(p_url):
@@ -17,23 +17,51 @@ def get_html_from_ticker(p_url):
 def parse_html_from_ticker(p_ticker, p_response):
     t_dictionary = {}
     soup = BeautifulSoup(p_response, 'lxml')
-    try:
-        t_dictionary[TICKER_KEYS.MARKET_CAP] = float(soup.select('div.col-6.col-md-4.compess')[0].select('span.Number')[0].text.strip())
-        # print('|', t_dictionary[TICKER_KEYS.MARKET_CAP])
-        if t_dictionary[TICKER_KEYS.MARKET_CAP] == 0.0:
-            temp_response = requests.get('https://ticker.finology.in/company/' + p_ticker).text
-            # print('in this if')
-            soup = BeautifulSoup(temp_response, 'lxml')
+
+    std_con_element = soup.find(id="mainContent_switchCon")
+    if std_con_element is not None:
+        # print('Consolidated Available')
+        print('')
+        if p_ticker[0] == '/':
+            url = 'https://ticker.finology.in' + p_ticker + '?mode=C'
+            ticker_manipulation = p_ticker.split('/')[2]
+            print(ticker_manipulation)
+            p_ticker = ticker_manipulation
         else:
-            try:
-                t_dictionary[TICKER_KEYS.EPS] = float(soup.select('div.col-6.col-md-4.compess')[11].select('span.Number')[0].text.strip())
-                # print(t_dictionary[TICKER_KEYS.EPS])
-                if t_dictionary[TICKER_KEYS.EPS] == 0:
-                    temp_response = requests.get('https://ticker.finology.in/company/' + p_ticker).text
-                    print('in this if')
-                    soup = BeautifulSoup(temp_response, 'lxml')
-            except:
-                print('Failed')
+            url = 'https://ticker.finology.in/company/' + p_ticker + '?mode=C'
+        temp_response = requests.get(url).text
+        soup = BeautifulSoup(temp_response, 'lxml')
+    else:
+        print('')
+        # print('Consolidated not available')
+
+    if p_ticker[0] == '/':
+        p_ticker = p_ticker.split('/')[2]
+
+    try:
+        # t_dictionary[TICKER_KEYS.MARKET_CAP] = float(soup.select('div.col-6.col-md-4.compess')[0].select('span.Number')[0].text.strip())
+        # # print('|', t_dictionary[TICKER_KEYS.MARKET_CAP])
+        # if t_dictionary[TICKER_KEYS.MARKET_CAP] == 0.0:
+        #     if p_ticker[0] == '/':
+        #         temp_response = requests.get('https://ticker.finology.in/company/' + p_ticker).text
+        #     else:
+        #         temp_response = requests.get('https://ticker.finology.in' + p_ticker).text
+        #
+        #     # print('in this if')
+        #     soup = BeautifulSoup(temp_response, 'lxml')
+        # else:
+        #     try:
+        #         t_dictionary[TICKER_KEYS.EPS] = float(soup.select('div.col-6.col-md-4.compess')[11].select('span.Number')[0].text.strip())
+        #         # print(t_dictionary[TICKER_KEYS.EPS])
+        #         if t_dictionary[TICKER_KEYS.EPS] == 0:
+        #             if p_ticker[0] == '/':
+        #                 temp_response = requests.get('https://ticker.finology.in/company/' + p_ticker).text
+        #             else:
+        #                 temp_response = requests.get('https://ticker.finology.in' + p_ticker).text
+        #             print('in this if')
+        #             soup = BeautifulSoup(temp_response, 'lxml')
+        #     except:
+        #         print('Failed')
 
         t_dictionary[TICKER_KEYS.NAME] = soup.find(id="mainContent_ltrlCompName").text.strip()
         t_dictionary[TICKER_KEYS.PRICE] = float(soup.find(class_="currprice").text.strip())
@@ -42,51 +70,25 @@ def parse_html_from_ticker(p_ticker, p_response):
 
         t_dictionary[TICKER_KEYS.SECTOR] = (soup.find(id="mainContent_compinfoId")).find('a').text.strip()
         t_dictionary[TICKER_KEYS.TICKER] = p_ticker
-        try:
-            t_dictionary[TICKER_KEYS.RATING_FINSTAR] = float(soup.find(id="mainContent_ltrlOverAllRating")['aria-label'][-11:-10])
-        except:
-            t_dictionary[TICKER_KEYS.RATING_FINSTAR] = '0'
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_OWNERSHIP_STATUS] = soup.find(id="mainContent_divOwner").find('span').text
-        except:
-            t_dictionary[TICKER_KEYS.RATING_OWNERSHIP_STATUS] = ' '
+        t_dictionary[TICKER_KEYS.RATING_FINSTAR] = float(soup.find(id="mainContent_ltrlOverAllRating")['aria-label'][-11:-10])
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_OWNERSHIP_VALUE] = float(soup.find_all('div', id="mainContent_ManagementRating")[0]['aria-label'][
+        t_dictionary[TICKER_KEYS.RATING_OWNERSHIP_STATUS] = soup.find(id="mainContent_divOwner").find('span').text
+
+        t_dictionary[TICKER_KEYS.RATING_OWNERSHIP_VALUE] = float(soup.find_all('div', id="mainContent_ManagementRating")[0]['aria-label'][
                                   -13:-10])
-        except:
-            t_dictionary[TICKER_KEYS.RATING_OWNERSHIP_VALUE] = ' '
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_VALUATION_STATUS] = soup.find(id="mainContent_divValuation").find('span').text
-        except:
-            t_dictionary[TICKER_KEYS.RATING_VALUATION_STATUS] = ' '
+        t_dictionary[TICKER_KEYS.RATING_VALUATION_STATUS] = soup.find(id="mainContent_divValuation").find('span').text
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_VALUATION_VALUE] = float(soup.find_all('div', id="mainContent_ValuationRating")[0]['aria-label'][-13:-10])
-        except:
-            t_dictionary[TICKER_KEYS.RATING_VALUATION_VALUE] = ' '
+        t_dictionary[TICKER_KEYS.RATING_VALUATION_VALUE] = float(soup.find_all('div', id="mainContent_ValuationRating")[0]['aria-label'][-13:-10])
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_EFFICIENCY_STATUS] = soup.find(id="mainContent_divEff").find('span').text
-        except:
-            t_dictionary[TICKER_KEYS.RATING_EFFICIENCY_STATUS] = ' '
+        t_dictionary[TICKER_KEYS.RATING_EFFICIENCY_STATUS] = soup.find(id="mainContent_divEff").find('span').text
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_EFFICIENCY_VALUE] = float(soup.find_all('div', id="mainContent_EfficiencyRating")[0]['aria-label'][-13:-10])
-        except:
-            t_dictionary[TICKER_KEYS.RATING_EFFICIENCY_VALUE] = ' '
+        t_dictionary[TICKER_KEYS.RATING_EFFICIENCY_VALUE] = float(soup.find_all('div', id="mainContent_EfficiencyRating")[0]['aria-label'][-13:-10])
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_FINANCIALS_STATUS] = soup.find(id="mainContent_divFinance").find('span').text
-        except:
-            t_dictionary[TICKER_KEYS.RATING_FINANCIALS_STATUS] = ' '
+        t_dictionary[TICKER_KEYS.RATING_FINANCIALS_STATUS] = soup.find(id="mainContent_divFinance").find('span').text
 
-        try:
-            t_dictionary[TICKER_KEYS.RATING_FINANCIALS_VALUE] = float(soup.find_all('div', id="mainContent_FinancialsRating")[0]['aria-label'][-13:-10])
-        except:
-            t_dictionary[TICKER_KEYS.RATING_FINANCIALS_VALUE] = ' '
+        t_dictionary[TICKER_KEYS.RATING_FINANCIALS_VALUE] = float(soup.find_all('div', id="mainContent_FinancialsRating")[0]['aria-label'][-13:-10])
 
         t_dictionary[TICKER_KEYS.MARKET_CAP] = float(soup.select('div.col-6.col-md-4.compess')[0].select('span.Number')[0].text.strip())
         t_dictionary[TICKER_KEYS.ENTERPRISE_VALUE] = float(soup.select('div.col-6.col-md-4.compess')[1].select('span.Number')[0].text.strip())
@@ -142,11 +144,11 @@ def parse_html_from_ticker(p_ticker, p_response):
 
 
 def get_data_from_ticker_using_bs4(p_ticker):
-    url = prepare_url(p_ticker)
+    if p_ticker[0] == '/':
+        url = 'https://ticker.finology.in' + p_ticker
+    else:
+        url = prepare_url(p_ticker)
     response = get_html_from_ticker(url)
     dictionary = parse_html_from_ticker(p_ticker, response)
     # print(dictionary)
     return dictionary
-
-
-# get_data_from_ticker_using_bs4('SCRIP-244215')

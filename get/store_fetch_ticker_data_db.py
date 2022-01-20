@@ -60,19 +60,6 @@ def new_data_exists(p_dictionary, p_result):
     return False
 
 
-# bundles = [
-#     'auto',
-#     'cement',
-#     'construction',
-#     'fmcg',
-#     'it',
-#     'nifty',
-#     'pharma',
-#     'portfolio',
-#     'sensex',
-#     'steel',
-# ]
-
 def update_bundle(p_bundles):
     bundles = [
         'auto',
@@ -124,11 +111,7 @@ def update_bundle(p_bundles):
         f.close()
 
 
-update_bundle([])
-
-
 def fetch_ticker_data_from_db(p_ticker):
     return collection.find_one({"Ticker": p_ticker})
 
 
-# print(fetch_ticker_data_from_db('GLOSTERLTD'))

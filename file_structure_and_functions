@@ -1,0 +1,71 @@
+Structure
+    'data' directory to store json data about sensex, nifty components etc.
+    'test' directory to store testing code
+    'get' directory to fetch data from sources using requests
+    'algorithms' directory for interpretation of data fetched by 'get' directory
+    'news' directory for company's media and press releases
+
+data
+    data_companies_auto.json
+    data_companies_cement.json
+    data_companies_construction.json
+    data_companies_fmcg.json
+    data_companies_it.json
+    data_companies_list.json
+    data_companies_nifty.json
+    data_companies_pharma.json
+    data_companies_portfolio.json
+    data_companies_sensex.json
+    data_companies_steel.json
+    data_companies_temp.json
+    data_companies_textile.json
+
+test
+
+
+get
+    1. data_from_screener_bs4.py
+        prepare_url(p_ticker)
+        get_html_from_screener(p_url)
+        parse_data_from_screener(p_ticker, p_response)
+        get_data_from_screener_using_bs4(p_ticker)
+
+    2. data_from_screener_selenium.py
+        get_data_from_screener_using_selenium(p_companies)
+
+    3. data_from_ticker_bs4.py
+        prepare_url(p_ticker)
+        get_html_from_ticker(p_url)
+        parse_html_from_ticker(p_ticker, p_response)
+        get_data_from_ticker_using_bs4(p_ticker)
+
+    4. historical_data_from_yf.py
+        get_date(number_of_days)
+        get_start_end_period(p_date, p_month, p_year)
+        get_start_date(p_date, p_month, p_year)
+        prepare_url(p_ticker, period1, period2, p_interval)
+        get_data_from_yahoo_finance(p_url)
+        prepare_dataframe(p_response)
+        prepare_ticker(p_ticker, p_exchange)
+        add_net_change_column_to_df(df)
+        add_percent_change_column_to_df(df)
+        get_data_from_start_date(p_ticker, p_exchange, p_interval, p_date, p_month, p_year, p_net_change, p_percent_change)
+        get_data_for_trailing_days(p_ticker, p_exchange, p_interval, p_interval_days, p_net_change, p_percent_change)
+        get_data_for_date(p_ticker, p_exchange, p_date, p_month, p_year)
+        get_monthly_gains(p_dataframe)
+        get_yearly_gains(p_ticker, p_exchange, p_interval, p_date, p_month, p_year, p_net_change, p_percent_change)
+        print_dataframe(p_dataframe)
+        reverse_list(p_list)
+        compute_cagr(df_yearly_gains)
+
+    5. store_fetch_gainer_loser_db.py
+        get_gainer_loser_companies()
+        update_gainer_loser_data()
+        fetch_gainer_loser_data()
+
+    6. store_fetch_ticker_data_db.py
+        new_data_exists(p_dictionary, p_result)
+        update_bundle(p_bundles)
+        fetch_ticker_data_from_db(p_ticker)
+
+

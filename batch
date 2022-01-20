@@ -1,0 +1,20 @@
+Batch would be run as follows:
+
+Update collection 'ticker_data' with new data from Ticker.
+    update a collection for buy opportunities with:
+    1. deviation from 52 Week High
+    2. Ticker Stars
+    3. run the company through Scorer
+    If satisfies the above 3 criteria, add to buy opportunities list.
+Update collections 'col_top_gainers' and 'col_top_losers' with new data from Ticker.
+    Create .csv file of the companies in both lists and mail.
+Analyze Buy Opportunities across sectors based on Last Quarterly Date Analysis.
+    Also, analyse 1d-3M trend and notify the trend in progress.
+Run the ticker-bundle script with selenium to get good companies and mail the same.
+
+
+for sector in sectors:
+    for company in sector:
+        go to ticker --> update collection ticker_data
+        fetch last 3 month data from YF, analyze trend
+        fetch price on result day and compare with present day, if meets criteria, add to buy op

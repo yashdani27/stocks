@@ -289,3 +289,8 @@ console.log({{count}});
 
 
 git clone https://yashdani90@bitbucket.org/yashdani90/stocks.git
+
+mongod --dbpath ~/Documents/data/db
+mongosh
+
+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

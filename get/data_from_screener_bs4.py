@@ -191,8 +191,3 @@ def get_data_from_screener_using_bs4(p_ticker):
     # print(dictionary['DIFF_' + SCREENER_KEYS.QR_SALES])
     # print(dictionary)
     return dictionary
-
-
-# print(get_data_from_screener_using_bs4('ABBOTINDIA'))
-
-# data_from_screener_selenium.get_screener_data('GPIL')

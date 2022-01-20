@@ -22,7 +22,18 @@
                 {% for company in companies %}
                     {% if loop.index < 11 %}
                         <div class="col-1 col-sm-1 col-md-1 col-lg-1 border-yf text-center padding-0">
-                            <span class="{{ 'text-green' if value[company['symbol']] > 15 else 'text-red' }}">{{value[company['symbol']]}}</span> | <span class="{{ 'text-green' if value[company['symbol'] + 'b'] > 15 else 'text-red' }}">{{value[company['symbol'] + 'b']}}</span>
+                            <div class="row padding-10">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4 {{ 'text-green' if value[company['symbol'] + 'p'] > 15 else 'text-red' }}">
+                                    {{value[company['symbol'] + 'p']}}
+                                </div>
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4 {{ 'text-green' if value[company['symbol'] + 'b'] > 15 else 'text-red' }}">
+                                    {{value[company['symbol'] + 'b']}}
+                                </div>
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-4 {{ 'text-green' if value[company['symbol']] > 15 else 'text-red' }}">
+                                    {{value[company['symbol']]}}
+                                </div>
+                            </div>
+<!--                            <span class="{{ 'text-green' if value[company['symbol'] + 'p'] > 15 else 'text-red' }}">{{value[company['symbol'] + 'p']}}</span>|<span class="{{ 'text-green' if value[company['symbol']] > 15 else 'text-red' }}">{{value[company['symbol']]}}</span>|<span class="{{ 'text-green' if value[company['symbol'] + 'b'] > 15 else 'text-red' }}">{{value[company['symbol'] + 'b']}}</span>-->
                         </div>
                     {% endif %}
                 {% endfor %}

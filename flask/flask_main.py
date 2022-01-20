@@ -3,6 +3,8 @@ import time
 from datetime import datetime
 
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 from flask import Flask, render_template, redirect, url_for, request
 from tabulate import tabulate
 
@@ -13,7 +15,10 @@ from get import historical_data_from_yf
 from get.data_from_ticker_bs4 import get_data_from_ticker_using_bs4
 from get.data_from_screener_bs4 import get_data_from_screener_using_bs4
 from get.historical_data_from_yf import get_data_from_start_date
-from get.store_fetch_ticker_data_db import fetch_ticker_data_from_db
+# from get.store_fetch_gainer_loser_db import fetch_gainer_loser_data
+# from get.store_fetch_ticker_data_db import fetch_ticker_data_from_db
+
+# from gainer_loser import get_gainer_loser_companies
 
 from login import LoginForm
 
@@ -43,7 +48,8 @@ def company(ticker):
     start_time = time.time()
     ticker = ticker
     time_ticker = time.time()
-    dictionary_ticker = fetch_ticker_data_from_db(ticker)
+    # dictionary_ticker = fetch_ticker_data_from_db(ticker)
+    dictionary_ticker = None
     if dictionary_ticker is None:
         dictionary_ticker = get_data_from_ticker_using_bs4(ticker)
     print("--- %s ticker seconds ---" % (time.time() - time_ticker))
@@ -339,6 +345,12 @@ def show_bundles():
 @app.route("/gainer-loser")
 def gainer_loser():
     print('gainer-loser')
+    companies = []
+    # gainers, losers = fetch_gainer_loser_data()
+    # types = [gainers, losers]
+    # headings = ['Top Gainers', 'Top Losers']
+    # # companies = get_gainer_loser_companies()
+    # return render_template("gainer-loser.html", headings=headings, types=types)
 
 
 @app.route("/comp-cagr", methods=['GET', 'POST'])
@@ -400,6 +412,7 @@ def comp_cagr():
             padding = [0] * (total_rows - df_cagr_company.shape[0])
             df_cagr[comp['symbol']] = (padding + df_cagr_company['CAGR (after COVID)'].to_list())
             df_cagr[comp['symbol'] + 'b'] = (padding + df_cagr_company['CAGR (before COVID)'].to_list())
+            df_cagr[comp['symbol'] + 'p'] = (padding + df_cagr_company['PercentChange'].to_list())
 
             # print(comp['symbol'])
             print('////////////////////////////////////')

@@ -280,10 +280,10 @@ def compute_cagr(df_yearly_gains):
 # final_df = get_data_from_start_date('NESTLEIND', 'NSE', 'monthly', 1, 1, 2010, False, False)
 # print_dataframe(final_df)
 
-df_year = get_yearly_gains('POWERMECH', 'NSE', 'monthly', 1, 1, 2010, True, True)
-print_dataframe(df_year)
-df_cagr = compute_cagr(df_year)
-print_dataframe(df_cagr)
+# df_year = get_yearly_gains('POWERMECH', 'NSE', 'monthly', 1, 1, 2010, True, True)
+# print_dataframe(df_year)
+# df_cagr = compute_cagr(df_year)
+# print_dataframe(df_cagr)
 
 
 #

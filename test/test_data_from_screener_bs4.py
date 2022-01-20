@@ -1,0 +1,3 @@
+from get.data_from_screener_bs4 import get_data_from_screener_using_bs4
+
+print(get_data_from_screener_using_bs4('ABBOTINDIA'))
