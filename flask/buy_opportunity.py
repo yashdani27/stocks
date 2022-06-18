@@ -10,7 +10,7 @@ from constants import SCREENER_KEYS
 from get import data_from_screener_bs4
 from get.data_from_screener_bs4 import get_data_from_screener_using_bs4
 from get.historical_data_from_yf import get_data_from_start_date, get_data_for_date
-from get.store_fetch_ticker_data_db import fetch_ticker_data_from_db
+# from get.store_fetch_ticker_data_db import fetch_ticker_data_from_db
 
 MONTHS = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 

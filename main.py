@@ -1,16 +1,19 @@
-# This is a sample Python script.
+from flask import Flask, render_template
+from flask_cors import CORS
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+from constants import TICKER_KEYS, SCREENER_KEYS
+from get.data_from_ticker_bs4 import get_data_from_ticker_using_bs4
+from get.data_from_screener_bs4 import get_data_from_screener_using_bs4
+app = Flask(__name__)
+CORS(app)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+@app.route("/")
+def home():
+    return render_template("index.html")
+    # dictionary_ticker = get_data_from_ticker_using_bs4('JUSTDIAL')
+    # dictionary_screener = get_data_from_screener_using_bs4('JUSTDIAL')
+    # return str(dictionary_ticker[TICKER_KEYS.ROE]) + ' ' + str(dictionary_screener[SCREENER_KEYS.ROE])
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    app.run(host='127.0.0.1', port=8080, debug=True)

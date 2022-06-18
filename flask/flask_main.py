@@ -50,10 +50,12 @@ def company(ticker):
     time_ticker = time.time()
     # dictionary_ticker = fetch_ticker_data_from_db(ticker)
     dictionary_ticker = None
+    # Get data from Ticker
     if dictionary_ticker is None:
         dictionary_ticker = get_data_from_ticker_using_bs4(ticker)
     print("--- %s ticker seconds ---" % (time.time() - time_ticker))
     time_screener = time.time()
+    # Get data from Screener
     dictionary_screener = get_data_from_screener_using_bs4(ticker)
     print("--- %s screener seconds ---" % (time.time() - time_screener))
 
@@ -192,14 +194,18 @@ def company(ticker):
     ]
 
     time_company_gains = time.time()
+    # Get yearly gains data for COMPANY from historical module
     df_yearly_gains_company = historical_data_from_yf.get_yearly_gains(ticker, 'NSE', 'monthly', 1, 1, 2010, True, True)
+    # Compute COMPANY CAGR from yearly gains data
     df_cagr_company = historical_data_from_yf.compute_cagr(df_yearly_gains_company)
     print("--- %s company gains seconds ---" % (time.time() - time_company_gains))
     # print_dataframe(df_cagr_company)
     print('df_cagr_company', df_cagr_company['Date'][0])
     time_index_gains = time.time()
+    # Get yearly gains data for INDEX from historical module
     df_yearly_gains_index = historical_data_from_yf.get_yearly_gains('%5ENSEI', '', 'monthly', 1, 1,
                                                                      int(df_cagr_company['Date'][0]), True, True)
+    # Compute INDEX CAGR from yearly gains data
     df_cagr_index = historical_data_from_yf.compute_cagr(df_yearly_gains_index)
     print("--- %s index gain seconds ---" % (time.time() - time_index_gains))
     print(dictionary_ticker[TICKER_KEYS.BOOK_VALUE] if dictionary_ticker is not None else 'No Data',
@@ -309,6 +315,11 @@ def home():
             "option": "Compare CAGR",
             "desc": "Compare CAGR for same sector companies.",
             "endpoint": "comp-cagr"
+        },
+        {
+            "option": "Show News",
+            "desc": "Recent press and media releases of companies",
+            "endpoint": "news"
         }
     ]
     form = LoginForm()
@@ -521,6 +532,11 @@ def charts(bundle):
     except FileNotFoundError:
         error = 'Invalid endpoint'
         return render_template("list_of_companies.html", error=error, data_companies=[], list_dict_data_points=[])
+
+
+@app.route("/news")
+def news():
+    return render_template("news.html")
 
 
 if __name__ == "__main__":
